@@ -166,6 +166,12 @@ EOF
 "Terminal 2:  cd frontend && npm run dev      (http://localhost:5173)"
 "Terminal 3:  cd admin    && npm run dev      (http://localhost:5174)"
 ```
+### 7) Visit (three different ports)
+```bash
+"Tbackend (http://localhost:4000)"
+"frontend (http://localhost:5173)"
+"admin    (http://localhost:5174)"
+```
 
 ## 🤝 Contributing
 
