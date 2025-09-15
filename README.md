@@ -129,7 +129,7 @@ sudo systemctl enable --now mongod
 ```
 ###  2) Clone the project
 ```bash
-git clone https://github.com/utkarsh9795/prescripto_full-stack_doctor_appointment_app.git
+git clone https://github.com/etrnalb/prescripto_full-stack_doctor_appointment_app.git
 cd prescripto_full-stack_doctor_appointment_app
 ```
 ### 3) Backend: install & .env
