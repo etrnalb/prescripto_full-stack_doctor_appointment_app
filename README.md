@@ -110,8 +110,9 @@
   - **Razorpay Integration**
 - Ensures a secure and smooth payment experience for users.
 
-## Terminal Steps (hardcoded; Ubuntu/Debian)
+## Terminal Steps (Ubuntu/Debian)
 
+### Prerequisites
 ```bash
 # 1) Install prerequisites: Git, Node.js 20, MongoDB 7
 sudo apt update -y
@@ -125,12 +126,14 @@ echo "deb [ signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.
 sudo apt-get update -y
 sudo apt-get install -y mongodb-org
 sudo systemctl enable --now mongod
-
-# 2) Clone the project
+```
+###  2) Clone the project
+```bash
 git clone https://github.com/utkarsh9795/prescripto_full-stack_doctor_appointment_app.git
 cd prescripto_full-stack_doctor_appointment_app
-
-# 3) Backend: install & .env
+```
+### 3) Backend: install & .env
+```bash
 cd backend
 npm install
 cat > .env <<'EOF'
@@ -140,27 +143,29 @@ RAZORPAY_KEY_ID=dummy_key
 RAZORPAY_KEY_SECRET=dummy_secret
 JWT_SECRET=supersecret
 EOF
-
-# 4) Frontend: install & .env
+```
+### 4) Frontend: install & .env
+```bash
 cd ../frontend
 npm install
 cat > .env <<'EOF'
 VITE_BACKEND_URL=http://localhost:4000
 EOF
-
-# 5) Admin: install & .env
+```
+### 5) Admin: install & .env
+```bash
 cd ../admin
 npm install
 cat > .env <<'EOF'
 VITE_BACKEND_URL=http://localhost:4000
 EOF
-
-# 6) How to run (open three terminals):
-echo
-echo "Terminal 1:  cd backend  && npm start        (http://localhost:4000)"
-echo "Terminal 2:  cd frontend && npm run dev      (http://localhost:5173)"
-echo "Terminal 3:  cd admin    && npm run dev      (http://localhost:5174)"
-
+```
+### 6) How to run (open three terminals):
+```bash
+"Terminal 1:  cd backend  && npm start        (http://localhost:4000)"
+"Terminal 2:  cd frontend && npm run dev      (http://localhost:5173)"
+"Terminal 3:  cd admin    && npm run dev      (http://localhost:5174)"
+```
 
 ## 🤝 Contributing
 
