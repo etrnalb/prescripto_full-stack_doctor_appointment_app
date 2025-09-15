@@ -110,93 +110,57 @@
   - **Razorpay Integration**
 - Ensures a secure and smooth payment experience for users.
 
-## Terminal Steps (copy-paste)
+## Terminal Steps (hardcoded; Ubuntu/Debian)
 
 ```bash
-# =========================
-# Prescripto local setup
-# (Ubuntu/Debian single-run)
-# =========================
-
-# --- Config (edit if needed) ---
-BACKEND_PORT=4000
-BACKEND_URL="http://localhost:${BACKEND_PORT}"
-DB_URI="mongodb://127.0.0.1:27017/prescripto"   # Use Atlas URI here if preferred
-JWT_SECRET="supersecret"
-RAZORPAY_KEY_ID="dummy_key"
-RAZORPAY_KEY_SECRET="dummy_secret"
-
-# 1) System prerequisites: Git, Node.js 20, MongoDB 7
+# 1) Install prerequisites: Git, Node.js 20, MongoDB 7
 sudo apt update -y
 sudo apt install -y ca-certificates curl gnupg git
-
-# Node.js (LTS v20)
 curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 sudo apt-get install -y nodejs
 node -v && npm -v
 
-# MongoDB (Community 7.0)
 curl -fsSL https://pgp.mongodb.com/server-7.0.asc | sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg --dearmor
-echo "deb [ signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu $(lsb_release -cs)/mongodb-org/7.0 multiverse" | \
-  sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+echo "deb [ signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu $(lsb_release -cs)/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
 sudo apt-get update -y
 sudo apt-get install -y mongodb-org
 sudo systemctl enable --now mongod
-sudo systemctl --no-pager status mongod | sed -n '1,10p'
 
 # 2) Clone the project
 git clone https://github.com/utkarsh9795/prescripto_full-stack_doctor_appointment_app.git
 cd prescripto_full-stack_doctor_appointment_app
 
-# 3) Backend: install & env
+# 3) Backend: install & .env
 cd backend
 npm install
-cat > .env <<EOF
-PORT=${BACKEND_PORT}
-MONGO_URI=${DB_URI}
-RAZORPAY_KEY_ID=${RAZORPAY_KEY_ID}
-RAZORPAY_KEY_SECRET=${RAZORPAY_KEY_SECRET}
-JWT_SECRET=${JWT_SECRET}
+cat > .env <<'EOF'
+PORT=4000
+MONGO_URI=mongodb://127.0.0.1:27017/prescripto
+RAZORPAY_KEY_ID=dummy_key
+RAZORPAY_KEY_SECRET=dummy_secret
+JWT_SECRET=supersecret
 EOF
 
-# 4) Frontend: install & env
+# 4) Frontend: install & .env
 cd ../frontend
 npm install
-cat > .env <<EOF
-VITE_BACKEND_URL=${BACKEND_URL}
+cat > .env <<'EOF'
+VITE_BACKEND_URL=http://localhost:4000
 EOF
 
-# 5) Admin: install & env
+# 5) Admin: install & .env
 cd ../admin
 npm install
-cat > .env <<EOF
-VITE_BACKEND_URL=${BACKEND_URL}
+cat > .env <<'EOF'
+VITE_BACKEND_URL=http://localhost:4000
 EOF
 
-# 6) Done — how to run (open three terminals):
-echo ""
-echo "================= RUN ================="
-echo "Terminal 1:  cd backend  && npm start          # http://localhost:${BACKEND_PORT}"
-echo "Terminal 2:  cd frontend && npm run dev        # http://localhost:5173"
-echo "Terminal 3:  cd admin    && npm run dev        # http://localhost:5174"
-echo "========================================"
+# 6) How to run (open three terminals):
+echo
+echo "Terminal 1:  cd backend  && npm start        (http://localhost:4000)"
+echo "Terminal 2:  cd frontend && npm run dev      (http://localhost:5173)"
+echo "Terminal 3:  cd admin    && npm run dev      (http://localhost:5174)"
 
-
-## 📦 Folder Structure
-
-```plaintext
-prescripto/
-├── client/          # Frontend (React.js)
-├── server/          # Backend (Node.js, Express.js)
-├── models/          # MongoDB Schemas
-├── controllers/     # API Controllers
-├── routes/          # API Routes
-├── middleware/      # Authentication and Error Handling
-├── config/          # Configuration Files
-├── utils/           # Utility Functions
-├── public/          # Static Files
-└── .env             # Environment Variables
-```
 
 ## 🤝 Contributing
 
