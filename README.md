@@ -110,36 +110,77 @@
   - **Razorpay Integration**
 - Ensures a secure and smooth payment experience for users.
 
-## 🌐 Project Setup
+## Terminal Steps (copy-paste)
 
-To set up and run this project locally:
+```bash
+# =========================
+# Prescripto local setup
+# (Ubuntu/Debian single-run)
+# =========================
 
-1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/your-username/prescripto.git
-   cd prescripto
-   ```
+# --- Config (edit if needed) ---
+BACKEND_PORT=4000
+BACKEND_URL="http://localhost:${BACKEND_PORT}"
+DB_URI="mongodb://127.0.0.1:27017/prescripto"   # Use Atlas URI here if preferred
+JWT_SECRET="supersecret"
+RAZORPAY_KEY_ID="dummy_key"
+RAZORPAY_KEY_SECRET="dummy_secret"
 
-2. **Install Dependencies**:
-   ```bash
-   npm install
-   cd client
-   npm install
-   ```
+# 1) System prerequisites: Git, Node.js 20, MongoDB 7
+sudo apt update -y
+sudo apt install -y ca-certificates curl gnupg git
 
-3. **Environment Variables**:
-   - Create a `.env` file in the root directory and add the following:
-     ```env
-     MONGO_URI=your_mongodb_connection_string
-     JWT_SECRET=your_jwt_secret
-     STRIPE_API_KEY=your_stripe_api_key
-     RAZORPAY_API_KEY=your_razorpay_api_key
-     ```
+# Node.js (LTS v20)
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt-get install -y nodejs
+node -v && npm -v
 
-4. **Run the Application**:
-   ```bash
-   npm run dev
-   ```
+# MongoDB (Community 7.0)
+curl -fsSL https://pgp.mongodb.com/server-7.0.asc | sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg --dearmor
+echo "deb [ signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu $(lsb_release -cs)/mongodb-org/7.0 multiverse" | \
+  sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+sudo apt-get update -y
+sudo apt-get install -y mongodb-org
+sudo systemctl enable --now mongod
+sudo systemctl --no-pager status mongod | sed -n '1,10p'
+
+# 2) Clone the project
+git clone https://github.com/utkarsh9795/prescripto_full-stack_doctor_appointment_app.git
+cd prescripto_full-stack_doctor_appointment_app
+
+# 3) Backend: install & env
+cd backend
+npm install
+cat > .env <<EOF
+PORT=${BACKEND_PORT}
+MONGO_URI=${DB_URI}
+RAZORPAY_KEY_ID=${RAZORPAY_KEY_ID}
+RAZORPAY_KEY_SECRET=${RAZORPAY_KEY_SECRET}
+JWT_SECRET=${JWT_SECRET}
+EOF
+
+# 4) Frontend: install & env
+cd ../frontend
+npm install
+cat > .env <<EOF
+VITE_BACKEND_URL=${BACKEND_URL}
+EOF
+
+# 5) Admin: install & env
+cd ../admin
+npm install
+cat > .env <<EOF
+VITE_BACKEND_URL=${BACKEND_URL}
+EOF
+
+# 6) Done — how to run (open three terminals):
+echo ""
+echo "================= RUN ================="
+echo "Terminal 1:  cd backend  && npm start          # http://localhost:${BACKEND_PORT}"
+echo "Terminal 2:  cd frontend && npm run dev        # http://localhost:5173"
+echo "Terminal 3:  cd admin    && npm run dev        # http://localhost:5174"
+echo "========================================"
+
 
 ## 📦 Folder Structure
 
